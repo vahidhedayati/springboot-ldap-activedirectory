@@ -1,40 +1,61 @@
 package com.example.ldap.activedirectory.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
+import org.springframework.ldap.core.support.BaseLdapPathContextSource;
+import org.springframework.security.ldap.authentication.BindAuthenticator;
+import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
+import org.springframework.security.ldap.authentication.LdapAuthenticator;
+import org.springframework.security.ldap.userdetails.PersonContextMapper;
 
-/**
- * Latest spring security has deprecated this way of doing things
- *
- */
+
 @Configuration
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
+    @Bean
+    BindAuthenticator authenticator(BaseLdapPathContextSource contextSource) {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("Using old way");
-        http.authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin();
+        BindAuthenticator authenticator= new BindAuthenticator(contextSource);
+        authenticator.setUserDnPatterns(new String[]{"cn={0}"});
+        //authenticator.setUserDnPatterns(new String[]{"uid={0},dc=example,dc=org"});
+        //authenticator.setUserDnPatterns(new String[]{"uid={0},ou=people,dc=planetexpress,dc=com"});
+        return authenticator;
     }
 
+    @Bean
+    LdapAuthenticationProvider authenticationProvider(LdapAuthenticator authenticator) {
+        LdapAuthenticationProvider provider = new LdapAuthenticationProvider(authenticator);
+        provider.setUserDetailsContextMapper(new PersonContextMapper());
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //dn: uid=ben,ou=people,dc=springframework,dc=org
-        auth
-            .ldapAuthentication()
-                .userDnPatterns("uid={0}, ou=people")
-                .groupSearchBase("ou=groups")
-                .contextSource()
-                .url("ldap://localhost:8389/dc=springframework,dc=org")
-                .and()
-                .passwordCompare()
-                .passwordEncoder(new LdapShaPasswordEncoder())
-                .passwordAttribute("userPassword");
+        return provider;
+    }
+    /*
+    @Bean
+    AuthenticationManager ldapAuthenticationManager(BaseLdapPathContextSource contextSource) {
+        LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource);
+        factory.setUserDnPatterns("uid={0},ou=people,dc=planetexpress,dc=com");
+        factory.setUserDetailsContextMapper(new PersonContextMapper());
+        return factory.createAuthenticationManager();
+    }
+*/
+/*
+    @Bean
+    public DataSource dataSource() {
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
+                .build();
     }
 
+    @Bean
+    public UserDetailsManager users(DataSource dataSource) {
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+        JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+        users.createUser(user);
+        return users;
+    }
+*/
 }
