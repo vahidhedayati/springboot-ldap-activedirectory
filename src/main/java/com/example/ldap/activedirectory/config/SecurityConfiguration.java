@@ -15,7 +15,8 @@ public class SecurityConfiguration {
     BindAuthenticator authenticator(BaseLdapPathContextSource contextSource) {
 
         BindAuthenticator authenticator= new BindAuthenticator(contextSource);
-        authenticator.setUserDnPatterns(new String[]{"cn={0}"});
+        //authenticator.setUserDnPatterns(new String[]{"uid={0}"});
+        authenticator.setUserSearch(new FilterBasedLdapUserSearch("ou=people", "(uid={0})", contextSource));
         //authenticator.setUserDnPatterns(new String[]{"uid={0},dc=example,dc=org"});
         //authenticator.setUserDnPatterns(new String[]{"uid={0},ou=people,dc=planetexpress,dc=com"});
         return authenticator;
