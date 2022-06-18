@@ -3,4 +3,4 @@ spring:
     urls: ldap://localhost:10389
     username: cn=admin,dc=planetexpress,dc=com
     password: GoodNewsEveryone
-    base: ou=people,dc=planetexpress,dc=com
+    base: dc=planetexpress,dc=com
