@@ -7,8 +7,7 @@ git clone git@github.com:vahidhedayati/springboot-ldap-activedirectory.git -b ma
 git clone git@github.com:vahidhedayati/springboot-ldap-activedirectory.git -b deprecated
 ```
 
-# [youtube video](https://studio.youtube.com/video/LLyE8p_UcxM/edit)
-Video suggests authenticating via cn rather than UID or username. This has since been fixed in latest updates 
+## [YouTube Video demonstrating project](https://www.youtube.com/watch?v=80xMJ47M5Hk)
 
 ```bash
 spring init --name=springboot-ldap-activedirectory --packageName=com.example.ldap.activedirectory --dependencies=web,security springboot-ldap-activedirectory
