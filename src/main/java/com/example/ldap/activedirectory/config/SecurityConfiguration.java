@@ -10,6 +10,7 @@ import org.springframework.security.ldap.authentication.BindAuthenticator;
 import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.security.ldap.authentication.LdapAuthenticator;
 import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
+import org.springframework.security.ldap.userdetails.PersonContextMapper;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -44,7 +45,15 @@ public class SecurityConfiguration {
     @Bean
     LdapAuthenticationProvider authenticationProvider(LdapAuthenticator authenticator) {
         LdapAuthenticationProvider provider = new LdapAuthenticationProvider(authenticator);
+
+        //This is the default way of doing things
+        //provider.setUserDetailsContextMapper(new PersonContextMapper());
+
+        // This is our own customised way of doing above which adds / appends new additional roles to the LDAP user
+        // ROLE_ADMIN, ROLE_SUPERUSER, ROLE_LIBRARIAN roles are added to each and every authenticated user
         provider.setUserDetailsContextMapper(new CustomUserDetailsMapper());
+
+        //This is to add ROLE_DEFAULT_AUTHORITY
         provider.setAuthoritiesMapper(grantedAuthoritiesMapper());
         return provider;
     }
