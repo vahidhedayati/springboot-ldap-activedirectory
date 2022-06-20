@@ -89,3 +89,8 @@ docker run --rm -p 10389:10389 -p 10636:10636 rroemhild/test-openldap
 
 
 Goto `http://localhost:8080/` you should be able to authenticate using UID password i.e. username: fry password: fry
+
+
+## LDAP/AD Configuration
+The current [username in application.yml](https://github.com/vahidhedayati/springboot-ldap-activedirectory/blob/main/src/main/resources/application.yml#L4) is `cn=admin,dc=planetexpress,dc=com`
+in the world of Active Directory the username may actually be something like `workgroup\\username`
