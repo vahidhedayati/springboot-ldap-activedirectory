@@ -77,9 +77,15 @@ userPassword	zoidberg
 
 
 
-Start the site
+### Start the site
 ```
  mvn spring-boot:run
 ```
+
+### Ensure LDAP is running 
+```
+docker run --rm -p 10389:10389 -p 10636:10636 rroemhild/test-openldap
+```
+
 
 Goto `http://localhost:8080/` you should be able to authenticate using UID password i.e. username: fry password: fry
