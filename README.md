@@ -8,6 +8,7 @@ git clone git@github.com:vahidhedayati/springboot-ldap-activedirectory.git -b de
 ```
 
 # [youtube video](https://studio.youtube.com/video/LLyE8p_UcxM/edit)
+Video suggests authenticating via cn rather than UID or username. This has since been fixed in latest updates 
 
 ```bash
 spring init --name=springboot-ldap-activedirectory --packageName=com.example.ldap.activedirectory --dependencies=web,security springboot-ldap-activedirectory
@@ -76,3 +77,9 @@ userPassword	zoidberg
 
 
 
+Start the site
+```
+ mvn spring-boot:run
+```
+
+Goto `http://localhost:8080/` you should be able to authenticate using UID password i.e. username: fry password: fry

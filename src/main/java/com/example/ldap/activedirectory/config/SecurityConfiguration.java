@@ -6,8 +6,8 @@ import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
 import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.security.ldap.authentication.LdapAuthenticator;
+import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
 import org.springframework.security.ldap.userdetails.PersonContextMapper;
-
 
 @Configuration
 public class SecurityConfiguration {
