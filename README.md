@@ -29,10 +29,6 @@ Add the following to  `pom.xml`
 		</dependency>
 </dependencies>
 ```
-Goto `https://spring.io/guides/gs/authenticating-ldap/`
-Scroll down to : `Set up User Data` and copy content provided into `resources/test-server.ldif`
-
-Launch site and goto `http://localhost:8080`, the following authentication worked
 
 
 
