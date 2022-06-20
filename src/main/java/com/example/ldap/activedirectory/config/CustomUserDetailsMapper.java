@@ -7,14 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
-import org.springframework.stereotype.Component;
 
 import javax.naming.directory.Attributes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Component
 public class CustomUserDetailsMapper implements UserDetailsContextMapper {
     private String passwordAttributeName = "userPassword";
     private String rolePrefix = "ROLE_";
