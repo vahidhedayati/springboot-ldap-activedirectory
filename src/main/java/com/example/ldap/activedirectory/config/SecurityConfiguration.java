@@ -2,15 +2,30 @@ package com.example.ldap.activedirectory.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
 import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.security.ldap.authentication.LdapAuthenticator;
 import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
 import org.springframework.security.ldap.userdetails.PersonContextMapper;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfiguration {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((authz) -> {
+            authz.antMatchers("/").authenticated();
+            authz.antMatchers("/admin").authenticated();
+            authz.antMatchers("/logs").permitAll();
+            authz.anyRequest().authenticated();
+        }).formLogin();
+        return http.build();
+    }
+
+
     @Bean
     BindAuthenticator authenticator(BaseLdapPathContextSource contextSource) {
 

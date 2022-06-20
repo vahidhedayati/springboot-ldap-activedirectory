@@ -9,4 +9,10 @@ public class HomeController {
     public String test() {
         return "Testing ldap / active directory authentication";
     }
+
+    @GetMapping("/logs")
+    public String logs() {
+        return "No authentication required";
+    }
+
 }
