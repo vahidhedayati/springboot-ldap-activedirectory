@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
@@ -13,9 +11,6 @@ import org.springframework.security.ldap.authentication.LdapAuthenticationProvid
 import org.springframework.security.ldap.authentication.LdapAuthenticator;
 import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 public class SecurityConfiguration {
@@ -37,37 +32,23 @@ public class SecurityConfiguration {
         BindAuthenticator authenticator= new BindAuthenticator(contextSource);
         //authenticator.setUserDnPatterns(new String[]{"uid={0}"});
         authenticator.setUserSearch(new FilterBasedLdapUserSearch("ou=people", "(uid={0})", contextSource));
-
-        //authenticator.setUserDnPatterns(new String[]{"uid={0},dc=example,dc=org"});
-        //authenticator.setUserDnPatterns(new String[]{"uid={0},ou=people,dc=planetexpress,dc=com"});
         return authenticator;
     }
     @Bean
     public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
         SimpleAuthorityMapper simpleMapper = new SimpleAuthorityMapper();
         simpleMapper.setPrefix("ROLE_");
-
-        // this does not work
-       // List<GrantedAuthority> authorityList = new ArrayList<>();
-       // authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN2"));
-       // simpleMapper.mapAuthorities(authorityList);
-
         simpleMapper.setDefaultAuthority("ROLE_DEFAULT_AUTHORITY");
-        //System.out.println("--simpleMapper------ "+simpleMapper.toString());
         return simpleMapper;
     }
     @Bean
     LdapAuthenticationProvider authenticationProvider(LdapAuthenticator authenticator) {
         LdapAuthenticationProvider provider = new LdapAuthenticationProvider(authenticator);
-
-
         provider.setUserDetailsContextMapper(new CustomUserDetailsMapper());
         provider.setAuthoritiesMapper(grantedAuthoritiesMapper());
-        //System.out.println("---provider----- "+provider.toString());
-        //provider.setAuthoritiesMapper((GrantedAuthoritiesMapper)authorityList);
-
         return provider;
     }
+
     /*
     @Bean
     AuthenticationManager ldapAuthenticationManager(BaseLdapPathContextSource contextSource) {

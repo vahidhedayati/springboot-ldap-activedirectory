@@ -41,7 +41,6 @@ public class CustomUserDetailsMapper implements UserDetailsContextMapper {
 
     @Override
     public UserDetails mapUserFromContext(DirContextOperations ctx, String username, Collection<? extends GrantedAuthority> authorities) {
-        System.out.println("WE HAVE BEEN CALLED");
         Attributes attributes = ctx.getAttributes();
         try {
             email = (String) attributes.get("mail").get();
@@ -56,7 +55,6 @@ public class CustomUserDetailsMapper implements UserDetailsContextMapper {
         authorityList.add(new SimpleGrantedAuthority("ROLE_LIBRARIAN"));
         authorityList.add(new SimpleGrantedAuthority("ROLE_SUPERUSER"));
         authorities = authorityList;
-        System.out.println("ohooo "+username+authorities);
 
         CustomUser userDetails = new CustomUser(username, "", true, true, true, true, authorityList, email, description);
         this.userDetails = userDetails;
@@ -65,7 +63,6 @@ public class CustomUserDetailsMapper implements UserDetailsContextMapper {
 
     @Override
     public void mapUserToContext(UserDetails user, DirContextAdapter ctx) {
-        System.out.println("WE HAVE BEEN CALLED 22");
     }
 
     public CustomUser getUserDetails() {

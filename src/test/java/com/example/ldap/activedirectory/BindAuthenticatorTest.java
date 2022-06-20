@@ -13,12 +13,6 @@ import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.ldap.authentication.BindAuthenticator;
 import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
 
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import java.util.Hashtable;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 

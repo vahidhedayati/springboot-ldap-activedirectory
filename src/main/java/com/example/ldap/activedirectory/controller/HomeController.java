@@ -22,17 +22,14 @@ public class HomeController {
 
     @GetMapping
     public String test(Authentication authentication, Principal principal) {
-
         String name = principal.getName();
-
-        List<String> roles = new ArrayList<String>();
+        //List<String> roles = new ArrayList<String>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         CustomUser customUser = userDetailsMapper.getUserDetails();
         System.out.println("- name "+name);
         for (GrantedAuthority authority : auth.getAuthorities()) {
             String a = authority.getAuthority();
-            roles.add(a);
+            //roles.add(a);
             System.out.println("ROLE "+a);
         }
 

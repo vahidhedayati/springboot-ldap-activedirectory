@@ -7,7 +7,6 @@ import java.util.Collection;
 
 public class CustomUser extends User {
 
-
     private String email;
     private String description;
 
