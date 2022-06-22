@@ -1,23 +1,6 @@
 spring:
   ldap:
-
-    # Spring LDAP
-    #
-    # In this example we use an embedded ldap server. When using a real one,
-    # you can configure the settings here.
-    #
-    # urls: ldap://localhost:12345
-    # base: dc=springframework,dc=org
-    # username: uid=admin
-    # password: secret
-
-    # Embedded Spring LDAP
-    embedded:
-      base-dn: dc=springframework,dc=org
-      #credential:
-        #username: uid=admin
-        #password: secret
-      ldif: classpath:test-server.ldif
-      port: 8389
-      validation:
-        enabled: false
+    urls: ldap://localhost:10389
+    username: cn=admin,dc=planetexpress,dc=com
+    password: GoodNewsEveryone
+    base: dc=planetexpress,dc=com
